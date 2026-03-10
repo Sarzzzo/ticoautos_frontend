@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos - Catálogo</title>
+    <!-- Incluimos la hoja de estilos global -->
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR SUPERIOR -->
+    <nav class="navbar">
+        <a href="#" class="navbar-logo">TicoAutos</a>
+
+        <div class="navbar-search">
+            <input type="text" id="searchInput" placeholder="Buscar por marca, modelo...">
+        </div>
+
+        <div class="navbar-actions">
+            <!-- Botón de publicar con acento verde tesla -->
+            <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
+            <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- CUERPO PRINCIPAL (Sidebar + Catálogo) -->
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR DE FILTROS -->
+        <aside class="sidebar">
+            <h2>Filtros</h2>
+
+            <div class="filter-group">
+                <label>Precio Mínimo ($)</label>
+                <input type="number" id="minPrice" placeholder="Ej: 5000">
+            </div>
+
+            <div class="filter-group">
+                <label>Precio Máximo ($)</label>
+                <input type="number" id="maxPrice" placeholder="Ej: 50000">
+            </div>
+
+            <div class="filter-group">
+                <label>Estado</label>
+                <select id="statusFilter">
+                    <option value="">Cualquiera</option>
+                    <option value="available">Disponible</option>
+                    <option value="sold">Vendido</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" style="width: 100%; border-radius: 10px;" onclick="loadVehicles()">Aplicar
+                Filtros</button>
+        </aside>
+
+        <!-- ZONA CENTRAL DE VEHÍCULOS -->
+        <main class="main-content">
+            <div class="results-header">
+                <span id="resultsCount">Mostrando vehículos de ejemplo (diseño)</span>
+            </div>
+
+            <!-- Aquí se inyectarán las tarjetas Grid desde app.js -->
+            <div class="vehicles-grid" id="vehiclesGrid">
+
+                <!-- EJEMPLO ESTÁTICO DE CÓMO SE VERÁ UNA TARJETA -->
+                <!-- Una vez que programemos app.js, estas se generarán solas conectadas al Backend -->
+                <a href="#" class="vehicle-card">
+                    <div class="badge-featured">🌟 Destacado</div>
+                    <div class="vehicle-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=500');">
+                        <!-- Foto del carro de Unsplash -->
+                    </div>
+
+                    <div class="vehicle-info">
+                        <div class="vehicle-price">$45,500</div>
+                        <h3 class="vehicle-title">Hyundai Staria 2025</h3>
+
+                        <!-- Detalles finos estilo Encuentra24 / GTA5 -->
+                        <div class="vehicle-specs">
+                            <span class="spec-item">📅 2025</span>
+                            <span class="spec-item">⛽ Diesel</span>
+                            <span class="spec-item">⚙️ Automática</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="vehicle-card">
+                    <div class="vehicle-image"
+                        style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=500');">
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="vehicle-price">$15,200</div>
+                        <h3 class="vehicle-title">Toyota Yaris Cross</h3>
+                        <div class="vehicle-specs">
+                            <span class="spec-item">📅 2022</span>
+                            <span class="spec-item">⛽ Gasolina</span>
+                            <span class="spec-item">⚙️ Manual</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Script principal -->
+    <script src="../src/app.js"></script>
+    <script>
+        // Función rápida para cerrar sesión provisional
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            window.location.href = '/'; // Redirige al login
+        }
+    </script>
+</body>
+
+</html>
