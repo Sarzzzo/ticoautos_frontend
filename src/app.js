@@ -72,17 +72,17 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         });
         const data = await response.json();
         if (response.ok) {
-            // ¡El backend nos dio el Token! Lo guardamos en el localStorage del navegador
+            // El backend nos dio el Token! Lo guardamos en el localStorage del navegador
             localStorage.setItem('token', data.token);
             localStorage.setItem('role', data.role);
 
             messageDiv.innerHTML = `<span class="success">¡Sesión iniciada! Redirigiendo...</span>`;
 
-            // simulate redirect to the vehicles page
+            // Redirige al dashboard real
             setTimeout(() => {
-                alert("¡Aquí iríamos a la página de ver los carros!");
-                // window.location.href = 'dashboard.html' next...
-            }, 1000); // 1 second delay
+                window.location.href = 'dashboard.html';
+            }, 1000); // 1.0 segundos de espera para que lea el mensaje de éxito
+
         } else {
             messageDiv.innerHTML = `<span class="error">${data.message || 'Credenciales inválidas'}</span>`;
         }
