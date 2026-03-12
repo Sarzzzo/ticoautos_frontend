@@ -72,16 +72,16 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         });
         const data = await response.json();
         if (response.ok) {
-            // El backend nos dio el Token! Lo guardamos en el localStorage del navegador
+            // The backend gave us the Token! We save it in the browser's localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('role', data.role);
 
             messageDiv.innerHTML = `<span class="success">¡Sesión iniciada! Redirigiendo...</span>`;
 
-            // Redirige al dashboard real
+            // Redirects to the real dashboard
             setTimeout(() => {
                 window.location.href = 'dashboard.html';
-            }, 1000); // 1.0 segundos de espera para que lea el mensaje de éxito
+            }, 1000); // 1.0 seconds wait to read the success message
 
         } else {
             messageDiv.innerHTML = `<span class="error">${data.message || 'Credenciales inválidas'}</span>`;
