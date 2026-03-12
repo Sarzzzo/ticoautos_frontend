@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicoAutos - Catálogo</title>
-    <!-- Incluimos la hoja de estilos global -->
+    <!-- Include the global stylesheet -->
     <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
 
-    <!-- NAVBAR SUPERIOR -->
+    <!-- TOP NAVBAR -->
     <nav class="navbar">
         <a href="#" class="navbar-logo">TicoAutos</a>
 
@@ -20,16 +20,16 @@
         </div>
 
         <div class="navbar-actions">
-            <!-- Botón de publicar con acento verde tesla -->
+            <!-- Publish button with tesla green accent -->
             <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
             <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
         </div>
     </nav>
 
-    <!-- CUERPO PRINCIPAL (Sidebar + Catálogo) -->
+    <!-- MAIN BODY (Sidebar + Catalog) -->
     <div class="dashboard-container">
 
-        <!-- SIDEBAR DE FILTROS -->
+        <!-- FILTERS SIDEBAR -->
         <aside class="sidebar">
             <h2>Filtros</h2>
 
@@ -56,29 +56,29 @@
                 Filtros</button>
         </aside>
 
-        <!-- ZONA CENTRAL DE VEHÍCULOS -->
+        <!-- CENTRAL VEHICLES ZONE -->
         <main class="main-content">
             <div class="results-header">
                 <span id="resultsCount">Mostrando vehículos de ejemplo (diseño)</span>
             </div>
 
-            <!-- Aquí se inyectarán las tarjetas Grid desde app.js -->
+            <!-- Grid cards will be injected here from dashboard.js -->
             <div class="vehicles-grid" id="vehiclesGrid">
 
-                <!-- EJEMPLO ESTÁTICO DE CÓMO SE VERÁ UNA TARJETA -->
-                <!-- Una vez que programemos app.js, estas se generarán solas conectadas al Backend -->
+                <!-- STATIC EXAMPLE OF HOW A CARD WILL LOOK -->
+                <!-- Once we program dashboard.js, these will be generated alone connected to the Backend -->
                 <a href="#" class="vehicle-card">
                     <div class="badge-featured">🌟 Destacado</div>
                     <div class="vehicle-image"
                         style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=500');">
-                        <!-- Foto del carro de Unsplash -->
+                        <!-- Unsplash car photo -->
                     </div>
 
                     <div class="vehicle-info">
                         <div class="vehicle-price">$45,500</div>
                         <h3 class="vehicle-title">Hyundai Staria 2025</h3>
 
-                        <!-- Detalles finos estilo Encuentra24 / GTA5 -->
+                        <!-- Fine details Encuentra24 / GTA5 style -->
                         <div class="vehicle-specs">
                             <span class="spec-item">📅 2025</span>
                             <span class="spec-item">⛽ Diesel</span>
@@ -106,16 +106,10 @@
         </main>
     </div>
 
-    <!-- Script principal -->
+    <!-- Main script -->
     <script src="../src/app.js"></script>
-    <script>
-        // Función rápida para cerrar sesión provisional
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            window.location.href = '/'; // Redirige al login
-        }
-    </script>
+
+    <!-- Connect the exclusive JS magic of the Dashboard -->
     <script src="../src/dashboard.js"></script>
 
 
