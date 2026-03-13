@@ -5,11 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicoAutos - Publicar Vehículo</title>
+    <!-- Include the global stylesheet -->
     <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
 
+    <!-- TOP NAVBAR -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-logo">TicoAutos</a>
+
+        <div class="navbar-actions">
+            <!-- Navigate back to the dashboard -->
+            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catálogo</button>
+            <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
+        </div>
+    </nav>
+
+    <!-- MAIN BODY -->
+    <div class="dashboard-container" style="justify-content: center; padding: 40px 20px;">
+        
+        <!-- CENTERED FORM CONTAINER -->
+        <main class="main-content" style="max-width: 600px; width: 100%;">
+            
+            <div style="background: white; border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
+                <h2 style="margin-bottom: 20px; color: var(--text-main);">Publicar un Nuevo Vehículo</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Completa los datos de tu vehículo para que miles de compradores puedan verlo.</p>
+
+                <!-- This ID matches the JavaScript event listener -->
+                <form id="publish-form">
+                    
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                            <label for="brand">Marca</label>
+                            <input type="text" id="brand" placeholder="Ej: Toyota" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                        <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                            <label for="model">Modelo</label>
+                            <input type="text" id="model" placeholder="Ej: Yaris" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                        <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                            <label for="year">Año</label>
+                            <!-- Valid range to prevent bad data in Database -->
+                            <input type="number" id="year" placeholder="Ej: 2022" min="1950" max="2026" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                        <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                            <label for="price">Precio ($)</label>
+                            <!-- Positive numbers only -->
+                            <input type="number" id="price" placeholder="Ej: 15000" min="1" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-bottom: 25px;">
+                        <label for="description">Descripción (Opcional)</label>
+                        <textarea id="description" placeholder="Cuenta más detalles sobre el estado del vehículo..." rows="4" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: none; font-family: inherit; box-sizing: border-box;"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 15px; font-size: 16px; border-radius: 8px;">Publicar Anuncio</button>
+                    
+                    <!-- Space dedicated to success or error messages from Node.js -->
+                    <div id="publish-message" style="margin-top: 20px; text-align: center; font-weight: 500;"></div>
+                </form>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MAIN SCRIPT -->
+    <script src="../src/publish.js"></script>
+    <script>
+        // Check authentication immediately (Runs instantly)
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('No tienes permiso para acceder a esta página. Debes iniciar sesión.');
+                // Redirects if trying to bypass login
+                window.location.href = '/';
+            }
+        });
+
+        // Logout function explicitly defined for the button
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            window.location.href = '/'; 
+        }
+    </script>
 </body>
 
 </html>
