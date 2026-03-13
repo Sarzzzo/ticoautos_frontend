@@ -46,9 +46,9 @@ async function loadVehicles() {
         
         // If there ARE cars, we use a loop (forEach) to create an HTML Card for each car
         vehicles.forEach((car) => {
-            // We create a hyperlink <a> for each car
+            // We create a hyperlink <a> for each car, pointing to the detail page with the car's ID
             const cardHtml = `
-                <a href="#" class="vehicle-card">
+                <a href="detalle.html?id=${car._id}" class="vehicle-card">
                     <!-- If it has a photo we put it, otherwise we put a gray background one -->
                     <div class="vehicle-image" style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=500');">
                     </div>
