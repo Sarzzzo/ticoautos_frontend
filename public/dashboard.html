@@ -12,62 +12,80 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="#" class="navbar-logo">TicoAutos</a>
+        <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
 
-        <div class="navbar-search">
-            <input type="text" id="searchInput" placeholder="Buscar por marca, modelo...">
+        <div class="navbar-center">
+            <span class="navbar-link active" onclick="window.location.href='dashboard.html'">Inicio</span>
+            <span class="navbar-link" onclick="window.location.href='publicar.html'">Publicar</span>
         </div>
 
-        <div class="navbar-actions">
-            <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
-            <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
+        <div class="navbar-right">
+            <div class="navbar-search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="searchInput" placeholder="Buscar...">
+            </div>
+
+            <!-- Messages icon -->
+            <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </button>
+
+            <!-- User avatar with logout -->
+            <div class="user-avatar" id="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
         </div>
     </nav>
 
-    <!-- MAIN BODY -->
-    <div class="dashboard-container">
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1>Vehiculos en venta,<br><span class="highlight">listos para ti.</span></h1>
+        <p>Explora el catalogo automotriz mas completo. Filtra por marca, precio o estado y encuentra tu proximo vehiculo.</p>
+        <div class="hero-actions">
+            <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
+            <button class="btn-secondary" onclick="document.getElementById('grid-section').scrollIntoView({behavior:'smooth'})">Ver Catalogo</button>
+        </div>
+    </section>
 
-        <!-- FILTERS SIDEBAR -->
-        <aside class="sidebar">
-            <h2>Filtros</h2>
+    <!-- FILTER BAR -->
+    <div class="filter-bar">
+        <input type="text" id="filterBrand" placeholder="Marca...">
+        <input type="number" id="minPrice" placeholder="Precio min...">
+        <input type="number" id="maxPrice" placeholder="Precio max...">
+        <select id="statusFilter">
+            <option value="">Cualquier estado</option>
+            <option value="available">Disponible</option>
+            <option value="sold">Vendido</option>
+        </select>
+        <button class="filter-apply" onclick="loadVehicles()">Aplicar</button>
+    </div>
 
-            <div class="filter-group">
-                <label>Precio Minimo ($)</label>
-                <input type="number" id="minPrice" placeholder="Ej: 5000">
-            </div>
+    <!-- SECTION LABEL -->
+    <div class="section-label" id="grid-section">
+        <h2>Vehiculos recientes</h2>
+        <span id="resultsCount">Cargando...</span>
+    </div>
 
-            <div class="filter-group">
-                <label>Precio Maximo ($)</label>
-                <input type="number" id="maxPrice" placeholder="Ej: 50000">
-            </div>
-
-            <div class="filter-group">
-                <label>Estado</label>
-                <select id="statusFilter">
-                    <option value="">Cualquiera</option>
-                    <option value="available">Disponible</option>
-                    <option value="sold">Vendido</option>
-                </select>
-            </div>
-
-            <button class="btn-primary" style="width: 100%; border-radius: 10px;" onclick="loadVehicles()">Aplicar Filtros</button>
-        </aside>
-
-        <!-- VEHICLE LIST -->
-        <main class="main-content">
-            <div class="results-header">
-                <span id="resultsCount">Cargando vehiculos...</span>
-            </div>
-
-            <div class="vehicles-grid" id="vehiclesGrid">
-                <!-- Injected dynamically by dashboard.js -->
-            </div>
-        </main>
+    <!-- VEHICLES GRID -->
+    <div class="vehicles-grid" id="vehiclesGrid">
+        <!-- Injected by dashboard.js -->
     </div>
 
     <script src="../src/dashboard.js"></script>
     <script>
-        function logout() { localStorage.removeItem('token'); window.location.href = '/'; }
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+
+        // Set user avatar initial
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    // We could set the initial if we had username in the token
+                } catch(e) {}
+            }
+        });
     </script>
 </body>
 
