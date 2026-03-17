@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 
-<body style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
     <div class="auth-container">
-        <!-- LEFT SIDE: FORM -->
+        <!-- LEFT: FORM -->
         <div class="form-side">
-            <div class="auth-logo">TicoAutos</div>
+            <div class="auth-logo">Tico<span>Autos</span></div>
 
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchTab('login')">Ingresar</button>
@@ -30,7 +30,7 @@
                         <label>Contrasena</label>
                         <input type="password" id="login-password" placeholder="********" required>
                     </div>
-                    <button type="submit" class="submit-btn">Entrar al Catalogo</button>
+                    <button type="submit" class="submit-btn">Ingresar</button>
                 </form>
             </div>
 
@@ -55,10 +55,10 @@
             <div id="status-message" class="message"></div>
         </div>
 
-        <!-- RIGHT SIDE: BRANDING -->
+        <!-- RIGHT: BRANDING -->
         <div class="image-side">
-            <h1 style="font-size: 40px; margin-bottom: 10px;">Encuentra o Vende</h1>
-            <p style="font-size: 18px; line-height: 1.5; color: #e5e7eb;">La plataforma automotriz mas avanzada del pais. Sin intermediarios, pura velocidad.</p>
+            <h1 style="font-size: 38px; margin-bottom: 12px; position: relative; z-index: 1;">Encuentra o Vende</h1>
+            <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); position: relative; z-index: 1;">La plataforma automotriz mas avanzada del pais. Sin intermediarios, pura velocidad.</p>
         </div>
     </div>
 
