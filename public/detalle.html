@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicoAutos - Detalle</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
-
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
         <div class="navbar-right">
             <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catalogo</button>
-            <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
         </div>
     </nav>
 
     <!-- LOADING -->
-    <div id="loading" style="text-align: center; margin-top: 80px; font-size: 18px; color: var(--text-muted);">
+    <div id="loading" style="text-align: center; margin-top: 100px; font-size: 20px; color: var(--text-muted);">
         Cargando vehiculo...
     </div>
 
-    <!-- MAIN -->
+    <!-- DETAIL -->
     <div class="detail-container" id="vehicle-container" style="display: none;">
-
-        <!-- Vehicle Info -->
         <div class="detail-card">
-            <div class="detail-image" style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800');"></div>
+            <div class="detail-image" id="detail-image"></div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h2 id="vehicle-title" class="detail-title">Cargando...</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 12px;">
+                <h1 id="vehicle-title" class="detail-title">Cargando...</h1>
                 <div id="vehicle-price" class="detail-price">$0</div>
             </div>
 
@@ -42,38 +36,19 @@
                 <span id="vehicle-owner" class="detail-tag">Vendedor</span>
             </div>
 
-            <h3 style="margin: 20px 0 10px; color: var(--text-white); font-size: 18px;">Descripcion</h3>
-            <p id="vehicle-description" style="color: var(--text-muted); line-height: 1.7;">Cargando descripcion...</p>
-        </div>
+            <h3 style="margin: 24px 0 12px; color: var(--text-white); font-size: 20px;">Descripcion</h3>
+            <p id="vehicle-description" style="color: var(--text-muted); line-height: 1.8; font-size: 16px;">Cargando...</p>
 
-        <!-- Q&A -->
-        <div class="qa-card">
-            <h3>Preguntas y Respuestas</h3>
-
-            <div id="questions-list">
-                <!-- Injected by detail.js -->
-            </div>
-
-            <!-- Ask form (only if not owner) -->
-            <div id="ask-section" style="display: none; margin-top: 20px;">
-                <h4 style="margin-bottom: 10px; color: var(--text-muted); font-size: 15px;">Preguntale al vendedor</h4>
-                <form id="ask-form">
-                    <textarea id="question-text" rows="3" required placeholder="Escribe tu pregunta aqui..."
-                        style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: none; font-family: inherit; margin-bottom: 12px; box-sizing: border-box; background: var(--bg-dark); color: var(--text-white);"></textarea>
-                    <button type="submit" class="btn-primary" style="padding: 10px 20px;">Enviar Pregunta</button>
-                </form>
-                <div id="ask-message" style="margin-top: 10px; font-size: 14px;"></div>
+            <!-- SEND MESSAGE BUTTON (only if not owner) -->
+            <div id="contact-section" style="display: none; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                <button class="btn-accent" id="contact-btn" style="width: 100%; padding: 16px; font-size: 16px;">
+                    Enviar Mensaje al Vendedor
+                </button>
+                <p style="text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 13px;">Se abrira un chat privado con el vendedor</p>
             </div>
         </div>
     </div>
 
     <script src="../src/detail.js"></script>
-    <script>
-        function logout() {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-        }
-    </script>
 </body>
-
 </html>
