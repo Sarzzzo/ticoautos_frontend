@@ -1,72 +1,94 @@
-// Publish logic
+// Publish logic with image upload support
 
-// Execute when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // Get the form element by its ID
-    const publishForm = document.getElementById('publish-form');
 
-    // Make sure the form exists on this page before adding the listener
+    const publishForm = document.getElementById('publish-form');
+    const imageInput = document.getElementById('image-input');
+    const imagePreview = document.getElementById('image-preview');
+    const uploadPlaceholder = document.getElementById('upload-placeholder');
+    const uploadZone = document.getElementById('upload-zone');
+
+    // Image preview when file is selected
+    if (imageInput) {
+        imageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    imagePreview.src = ev.target.result;
+                    imagePreview.style.display = 'block';
+                    uploadPlaceholder.style.display = 'none';
+                    uploadZone.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
     if (publishForm) {
         publishForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Prevent page reload
+            e.preventDefault();
 
-            // Obtain the values from the inputs
             const brand = document.getElementById('brand').value;
             const model = document.getElementById('model').value;
             const year = parseInt(document.getElementById('year').value);
             const price = parseFloat(document.getElementById('price').value);
             const description = document.getElementById('description').value;
 
-            // Target the message container to inform the user
             const messageDiv = document.getElementById('publish-message');
-            messageDiv.innerHTML = '<span style="color: #6b7280;">Publicando anuncio...</span>';
+            messageDiv.innerHTML = '<span style="color: var(--text-muted);">Publicando anuncio...</span>';
 
-            // IMPORTANT: Get the JWT token because publishing is a protected route
             const token = localStorage.getItem('token');
-            
-            // Security check
+
             if (!token) {
-                messageDiv.innerHTML = '<span class="error" style="color: #dc2626;">Error: No estás autenticado.</span>';
+                messageDiv.innerHTML = '<span style="color: #ef4444;">Error: No estas autenticado.</span>';
                 setTimeout(() => window.location.href = '/', 2000);
                 return;
             }
 
+            // Use FormData to support file upload
+            const formData = new FormData();
+            formData.append('brand', brand);
+            formData.append('model', model);
+            formData.append('year', year);
+            formData.append('price', price);
+            formData.append('description', description);
+
+            // Attach image if selected
+            if (imageInput && imageInput.files[0]) {
+                formData.append('image', imageInput.files[0]);
+            }
+
             try {
-                // Fetch request to the backend protected POST route
                 const response = await fetch('http://localhost:3000/api/vehicles', {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        // We send the token in the Headers just like Postman
-                        'Authorization': `Bearer ${token}` 
+                    headers: {
+                        // Do NOT set Content-Type - browser sets it automatically for FormData with boundary
+                        'Authorization': `Bearer ${token}`
                     },
-                    // Send all the form data in JSON format
-                    body: JSON.stringify({ brand, model, year, price, description })
+                    body: formData
                 });
 
-                // Read the response from the server
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Success! 
-                    messageDiv.innerHTML = `<span class="success" style="color: #10b981;">¡Vehículo publicado con éxito!</span>`;
-                    
-                    // Clean the form fields
-                    document.getElementById('publish-form').reset();
-                    
-                    // Redirect back to dashboard to see the new car alive
+                    messageDiv.innerHTML = '<span style="color: var(--accent);">Vehiculo publicado con exito!</span>';
+                    publishForm.reset();
+                    // Reset image preview
+                    if (imagePreview) {
+                        imagePreview.style.display = 'none';
+                        uploadPlaceholder.style.display = 'flex';
+                        uploadZone.classList.remove('has-image');
+                    }
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
                     }, 1500);
-
                 } else {
-                    // Server responded with 400 or 500 error messages
-                    messageDiv.innerHTML = `<span class="error" style="color: #dc2626;">${data.message || data.error || 'Error al publicar'}</span>`;
+                    messageDiv.innerHTML = `<span style="color: #ef4444;">${data.message || data.error || 'Error al publicar'}</span>`;
                 }
             } catch (error) {
                 console.error("Connection error:", error);
-                messageDiv.innerHTML = `<span class="error" style="color: #dc2626;">Error de conexión con el servidor.</span>`;
+                messageDiv.innerHTML = '<span style="color: #ef4444;">Error de conexion con el servidor.</span>';
             }
         });
     }
