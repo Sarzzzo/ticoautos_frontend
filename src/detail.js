@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const decodedPayload = JSON.parse(atob(payloadBase64));
             currentUserId = decodedPayload.user.id;
         } catch (e) {
-            console.error('Error decoding local token:', e);
+            console.error('Error decoding token:', e);
         }
     }
 
@@ -44,23 +44,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('vehicle-price').innerText = `$${vehicle.price.toLocaleString()}`;
         document.getElementById('vehicle-year').innerText = `Ano: ${vehicle.year}`;
         document.getElementById('vehicle-status').innerText = vehicle.status === 'available' ? 'Disponible' : 'Vendido';
-        document.getElementById('vehicle-owner').innerText = `En venta por: ${vehicle.ownerId.username}`;
+        document.getElementById('vehicle-owner').innerText = `Vendedor: ${vehicle.ownerId.username}`;
         document.getElementById('vehicle-description').innerText = vehicle.description || 'Sin descripcion detallada.';
 
         currentVehicleOwnerId = vehicle.ownerId._id.toString();
 
+        // Show ask section only if: logged in, not the owner, and hasn't asked already
         if (token && currentUserId && currentUserId !== currentVehicleOwnerId) {
-            askSection.style.display = 'block';
+            const alreadyAsked = vehicle.questions && vehicle.questions.some(
+                q => q.authorId && q.authorId._id === currentUserId
+            );
+            if (!alreadyAsked) {
+                askSection.style.display = 'block';
+            }
         }
 
         renderQuestions(vehicle.questions, currentUserId, currentVehicleOwnerId, vehicleId, token);
 
         loadingDiv.style.display = 'none';
-        vehicleContainer.style.display = 'flex';
+        vehicleContainer.style.display = 'block';
 
     } catch (error) {
         console.error('Error fetching vehicle', error);
-        alert('Error de conexion al cargar la informacion del vehiculo.');
+        alert('Error de conexion al cargar el vehiculo.');
     }
 
     if (askForm) {
@@ -69,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const content = document.getElementById('question-text').value;
             const askMsg = document.getElementById('ask-message');
 
-            askMsg.innerHTML = '<span style="color: gray;">Enviando...</span>';
+            askMsg.innerHTML = '<span style="color: var(--text-muted);">Enviando...</span>';
 
             try {
                 const qResponse = await fetch('http://localhost:3000/api/qa/questions', {
@@ -88,11 +94,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.getElementById('question-text').value = '';
                     setTimeout(() => window.location.reload(), 1500);
                 } else {
-                    askMsg.innerHTML = `<span style="color: #dc2626;">${qData.message || 'Error'}</span>`;
+                    askMsg.innerHTML = `<span style="color: #ef4444;">${qData.message || 'Error'}</span>`;
                 }
             } catch (err) {
                 console.error(err);
-                askMsg.innerHTML = '<span style="color: #dc2626;">Error de red</span>';
+                askMsg.innerHTML = '<span style="color: #ef4444;">Error de red</span>';
             }
         });
     }
@@ -103,7 +109,7 @@ function renderQuestions(questions, currentUserId, vehicleOwnerId, vehicleId, to
     const listDiv = document.getElementById('questions-list');
 
     if (!questions || questions.length === 0) {
-        listDiv.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Nadie ha preguntado aun. Se el primero!</p>';
+        listDiv.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Nadie ha preguntado aun.</p>';
         return;
     }
 
@@ -112,30 +118,27 @@ function renderQuestions(questions, currentUserId, vehicleOwnerId, vehicleId, to
     questions.forEach(q => {
         const authorName = q.authorId ? q.authorId.username : 'Usuario';
 
-        html += `
-            <div style="background: #f9fafb; border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; margin-bottom: 15px;">
-                <div style="margin-bottom: 10px;">
-                    <strong style="color: var(--text-main);">${authorName} pregunta:</strong>
-                    <p style="margin: 5px 0 0 0; color: #4b5563;">${q.content}</p>
-                </div>
-        `;
+        html += `<div class="question-block">`;
+        html += `<div class="question-author">${authorName} pregunta:</div>`;
+        html += `<div class="question-text">${q.content}</div>`;
 
         if (q.answerId) {
-            const answerAuthorName = q.answerId.authorId ? q.answerId.authorId.username : 'Vendedor';
+            const answerAuthor = q.answerId.authorId ? q.answerId.authorId.username : 'Vendedor';
             html += `
-                <div style="background: rgba(124, 58, 237, 0.05); border-left: 4px solid var(--primary); padding: 15px; margin-top: 15px; border-radius: 4px;">
-                    <strong style="color: var(--primary);">Respuesta de ${answerAuthorName}:</strong>
-                    <p style="margin: 5px 0 0 0; color: #4b5563;">${q.answerId.content}</p>
+                <div class="answer-block">
+                    <div class="answer-author">Respuesta de ${answerAuthor}:</div>
+                    <div class="answer-text">${q.answerId.content}</div>
                 </div>
             `;
         } else if (currentUserId === vehicleOwnerId) {
             html += `
-                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+                <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color);">
                     <form onsubmit="submitAnswer(event, '${q._id}', '${token}')">
-                        <textarea id="reply-text-${q._id}" rows="2" placeholder="Escribe tu respuesta como vendedor..." required style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; resize: none;"></textarea>
-                        <button type="submit" class="btn-primary" style="margin-top: 10px; padding: 8px 16px; font-size: 14px;">Responder</button>
+                        <textarea id="reply-text-${q._id}" rows="2" placeholder="Escribe tu respuesta..." required
+                            style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; resize: none; background: var(--bg-surface); color: var(--text-white); font-family: inherit; box-sizing: border-box;"></textarea>
+                        <button type="submit" class="btn-primary" style="margin-top: 8px; padding: 8px 16px; font-size: 13px;">Responder</button>
                     </form>
-                    <div id="reply-msg-${q._id}" style="margin-top: 5px;"></div>
+                    <div id="reply-msg-${q._id}" style="margin-top: 6px; font-size: 13px;"></div>
                 </div>
             `;
         }
@@ -151,7 +154,7 @@ async function submitAnswer(e, questionId, token) {
     const content = document.getElementById(`reply-text-${questionId}`).value;
     const msgDiv = document.getElementById(`reply-msg-${questionId}`);
 
-    msgDiv.innerHTML = '<span style="color: gray;">Respondiendo...</span>';
+    msgDiv.innerHTML = '<span style="color: var(--text-muted);">Respondiendo...</span>';
 
     try {
         const response = await fetch('http://localhost:3000/api/qa/answers', {
@@ -166,12 +169,12 @@ async function submitAnswer(e, questionId, token) {
         const data = await response.json();
 
         if (response.ok) {
-            msgDiv.innerHTML = '<span style="color: var(--accent);">Respuesta exitosa!</span>';
+            msgDiv.innerHTML = '<span style="color: var(--accent);">Respuesta enviada!</span>';
             setTimeout(() => window.location.reload(), 1000);
         } else {
-            msgDiv.innerHTML = `<span style="color: #dc2626;">${data.message || 'Error'}</span>`;
+            msgDiv.innerHTML = `<span style="color: #ef4444;">${data.message || 'Error'}</span>`;
         }
     } catch (err) {
-        msgDiv.innerHTML = '<span style="color: #dc2626;">Error de red</span>';
+        msgDiv.innerHTML = '<span style="color: #ef4444;">Error de red</span>';
     }
 }
