@@ -74,11 +74,12 @@ a {
 }
 
 .logo-img {
-    height: 90px;
+    height: 120px;
     width: auto;
     object-fit: contain;
     transition: transform 0.3s ease;
-    margin: -10px 0;
+    margin: -30px 0;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
 
 .logo-img:hover {
