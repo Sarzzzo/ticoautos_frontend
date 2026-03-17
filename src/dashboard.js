@@ -67,7 +67,7 @@ async function loadVehicles() {
                         <span class="${badgeClass}">${badgeText}</span>
                     </div>
                     <div class="card-body">
-                        <div class="card-price">$${car.price.toLocaleString()}</div>
+                        <div class="card-price">₡${car.price.toLocaleString('es-CR')}</div>
                         <div class="card-title">${car.brand} ${car.model}</div>
                         <div class="card-meta">
                             <span>Año: ${car.year}</span>
