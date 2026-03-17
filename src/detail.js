@@ -1,4 +1,4 @@
-// Detail page: shows vehicle info + "Send Message" button (no Q&A here)
+// Detail page: vehicle info + owner actions + buyer actions
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -32,15 +32,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // Populate info
+        // Fill vehicle info
         document.getElementById('vehicle-title').innerText = `${vehicle.brand} ${vehicle.model}`;
         document.getElementById('vehicle-price').innerText = `$${vehicle.price.toLocaleString()}`;
-        document.getElementById('vehicle-year').innerText = `Ano: ${vehicle.year}`;
-        document.getElementById('vehicle-status').innerText = vehicle.status === 'available' ? 'Disponible' : 'Vendido';
-        document.getElementById('vehicle-owner').innerText = `Vendedor: ${vehicle.ownerId.username}`;
+        document.getElementById('vehicle-year').innerText = `Año: ${vehicle.year}`;
         document.getElementById('vehicle-description').innerText = vehicle.description || 'Sin descripcion detallada.';
 
-        // Show uploaded image or default
+        // Status tag
+        const statusTag = document.getElementById('vehicle-status');
+        if (vehicle.status === 'sold') {
+            statusTag.innerText = 'Vendido';
+            statusTag.style.background = 'rgba(239, 68, 68, 0.1)';
+            statusTag.style.color = '#ef4444';
+            statusTag.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+        } else {
+            statusTag.innerText = 'Disponible';
+        }
+
+        // Owner name
+        document.getElementById('vehicle-owner').innerText = `Vendedor: ${vehicle.ownerId.username}`;
+
+        // Image
         const detailImg = document.getElementById('detail-image');
         if (vehicle.image) {
             detailImg.style.backgroundImage = `url('http://localhost:3000${vehicle.image}')`;
@@ -50,14 +62,41 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const ownerId = vehicle.ownerId._id.toString();
 
-        // Show contact button only if logged in and NOT the owner
-        if (token && currentUserId && currentUserId !== ownerId) {
+        // OWNER: Show mark as sold button (only if vehicle is still available)
+        if (token && currentUserId && currentUserId === ownerId && vehicle.status === 'available') {
+            const ownerSection = document.getElementById('owner-section');
+            ownerSection.style.display = 'block';
+
+            document.getElementById('mark-sold-btn').addEventListener('click', async () => {
+                if (!confirm('Seguro que quieres marcar este vehiculo como vendido? No se puede revertir.')) return;
+
+                try {
+                    const soldRes = await fetch(`http://localhost:3000/api/vehicles/${vehicleId}/sold`, {
+                        method: 'PUT',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    const soldData = await soldRes.json();
+
+                    if (soldRes.ok) {
+                        alert('Vehiculo marcado como vendido!');
+                        window.location.reload();
+                    } else {
+                        alert(soldData.message || 'Error al marcar como vendido');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Error de conexion');
+                }
+            });
+        }
+
+        // BUYER: Show contact button (only if not owner and vehicle is available)
+        if (token && currentUserId && currentUserId !== ownerId && vehicle.status === 'available') {
             const contactSection = document.getElementById('contact-section');
             contactSection.style.display = 'block';
 
             document.getElementById('contact-btn').addEventListener('click', async () => {
                 try {
-                    // Create or get conversation, then redirect to messages
                     const chatRes = await fetch(`http://localhost:3000/api/chat/vehicle/${vehicleId}`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
@@ -75,7 +114,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Hide loading, show content
+        // GUEST: Show prompt to login
+        if (!token && vehicle.status === 'available') {
+            document.getElementById('guest-section').style.display = 'block';
+        }
+
+        // Show content
         document.getElementById('loading').style.display = 'none';
         document.getElementById('vehicle-container').style.display = 'block';
 
