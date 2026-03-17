@@ -10,8 +10,25 @@
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
+
+        <div class="navbar-center">
+            <span class="navbar-link" onclick="window.location.href='dashboard.html'">Volver al Catalogo</span>
+            <span class="navbar-link" id="nav-publish-link" onclick="window.location.href='publicar.html'" style="display:none;">Publicar</span>
+        </div>
+
         <div class="navbar-right">
-            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catalogo</button>
+            <!-- Authenticated nav -->
+            <div id="auth-nav" style="display: none; align-items: center; gap: 16px;">
+                <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </button>
+                <div class="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
+            </div>
+
+            <!-- Not authenticated nav -->
+            <div id="noauth-nav" style="display: none; align-items: center; gap: 12px;">
+                <button class="btn-primary" onclick="window.location.href='/'">Iniciar Sesion</button>
+            </div>
         </div>
     </nav>
 
@@ -31,7 +48,7 @@
             </div>
 
             <div class="detail-tags">
-                <span id="vehicle-year" class="detail-tag">Ano: 0000</span>
+                <span id="vehicle-year" class="detail-tag">Año: 0000</span>
                 <span id="vehicle-status" class="detail-tag status">Cargando</span>
                 <span id="vehicle-owner" class="detail-tag">Vendedor</span>
             </div>
@@ -39,16 +56,53 @@
             <h3 style="margin: 24px 0 12px; color: var(--text-white); font-size: 20px;">Descripcion</h3>
             <p id="vehicle-description" style="color: var(--text-muted); line-height: 1.8; font-size: 16px;">Cargando...</p>
 
-            <!-- SEND MESSAGE BUTTON (only if not owner) -->
+            <!-- OWNER ACTIONS: Mark as sold -->
+            <div id="owner-section" style="display: none; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                <button class="btn-primary" id="mark-sold-btn" style="width: 100%; padding: 16px; font-size: 16px; background: var(--danger);">
+                    Marcar como Vendido
+                </button>
+                <p style="text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 13px;">
+                    Una vez vendido, el estado no se puede revertir
+                </p>
+            </div>
+
+            <!-- BUYER ACTIONS: Send message -->
             <div id="contact-section" style="display: none; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border-color);">
                 <button class="btn-accent" id="contact-btn" style="width: 100%; padding: 16px; font-size: 16px;">
                     Enviar Mensaje al Vendedor
                 </button>
                 <p style="text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 13px;">Se abrira un chat privado con el vendedor</p>
             </div>
+
+            <!-- GUEST ACTIONS: Prompt to login -->
+            <div id="guest-section" style="display: none; margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--border-color); text-align: center;">
+                <p style="color: var(--text-muted); margin-bottom: 14px; font-size: 15px;">Inicia sesion para contactar al vendedor.</p>
+                <button class="btn-secondary" onclick="window.location.href='/'" style="width: 100%; padding: 14px; font-size: 15px;">
+                    Iniciar Sesion / Registrarse
+                </button>
+            </div>
         </div>
     </div>
 
     <script src="../src/detail.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const authElements = document.getElementById('auth-nav');
+            const noAuthElements = document.getElementById('noauth-nav');
+            if (token) {
+                authElements.style.display = 'flex';
+                noAuthElements.style.display = 'none';
+                document.getElementById('nav-publish-link').style.display = 'inline';
+            } else {
+                authElements.style.display = 'none';
+                noAuthElements.style.display = 'flex';
+            }
+        });
+    </script>
 </body>
 </html>
