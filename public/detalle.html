@@ -10,8 +10,7 @@
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-logo">
-            <img src="../img/ImageProy.png" alt="Logo TicoAutos" class="logo-img">
-            Tico<span>Autos</span>
+            <img src="./img/ImageProy.png" alt="Logo TicoAutos" class="logo-img">
         </a>
         <div class="navbar-center">
             <span class="navbar-link" onclick="window.location.href='dashboard.html'">Volver al Catalogo</span>
@@ -19,7 +18,9 @@
         </div>
         <div class="navbar-right">
             <div id="auth-nav" style="display: none; align-items: center; gap: 16px;">
-                <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">💬</button>
+                <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </button>
                 <div class="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
             </div>
             <div id="noauth-nav" style="display: none; align-items: center; gap: 12px;">
