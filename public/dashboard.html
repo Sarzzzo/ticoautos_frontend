@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicoAutos - Catalogo</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
-
 <body>
 
     <!-- NAVBAR -->
@@ -22,7 +20,7 @@
         <div class="navbar-right">
             <div class="navbar-search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input type="text" id="searchInput" placeholder="Buscar...">
+                <input type="text" id="searchInput" placeholder="Buscar marca o modelo..." onkeydown="if(event.key==='Enter') searchFromNavbar()">
             </div>
 
             <!-- Messages icon -->
@@ -30,24 +28,25 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </button>
 
-            <!-- User avatar with logout -->
-            <div class="user-avatar" id="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
+            <div class="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
+    <!-- HERO -->
     <section class="hero">
         <h1>Vehiculos en venta,<br><span class="highlight">listos para ti.</span></h1>
-        <p>Explora el catalogo automotriz mas completo. Filtra por marca, precio o estado y encuentra tu proximo vehiculo.</p>
+        <p>Explora el catalogo automotriz mas completo. Filtra por marca, modelo, precio, ano o estado.</p>
         <div class="hero-actions">
             <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
-            <button class="btn-secondary" onclick="document.getElementById('grid-section').scrollIntoView({behavior:'smooth'})">Ver Catalogo</button>
         </div>
     </section>
 
-    <!-- FILTER BAR -->
+    <!-- FILTER BAR (all required filters from enunciado) -->
     <div class="filter-bar">
         <input type="text" id="filterBrand" placeholder="Marca...">
+        <input type="text" id="filterModel" placeholder="Modelo...">
+        <input type="number" id="minYear" placeholder="Ano min...">
+        <input type="number" id="maxYear" placeholder="Ano max...">
         <input type="number" id="minPrice" placeholder="Precio min...">
         <input type="number" id="maxPrice" placeholder="Precio max...">
         <select id="statusFilter">
@@ -55,19 +54,17 @@
             <option value="available">Disponible</option>
             <option value="sold">Vendido</option>
         </select>
-        <button class="filter-apply" onclick="loadVehicles()">Aplicar</button>
+        <button class="filter-apply" onclick="loadVehicles()">Buscar</button>
     </div>
 
     <!-- SECTION LABEL -->
     <div class="section-label" id="grid-section">
-        <h2>Vehiculos recientes</h2>
+        <h2>Resultados</h2>
         <span id="resultsCount">Cargando...</span>
     </div>
 
-    <!-- VEHICLES GRID -->
-    <div class="vehicles-grid" id="vehiclesGrid">
-        <!-- Injected by dashboard.js -->
-    </div>
+    <!-- GRID -->
+    <div class="vehicles-grid" id="vehiclesGrid"></div>
 
     <script src="../src/dashboard.js"></script>
     <script>
@@ -76,17 +73,16 @@
             window.location.href = '/';
         }
 
-        // Set user avatar initial
-        document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const payload = JSON.parse(atob(token.split('.')[1]));
-                    // We could set the initial if we had username in the token
-                } catch(e) {}
+        // Navbar search -> populates brand filter and triggers search
+        function searchFromNavbar() {
+            const term = document.getElementById('searchInput').value.trim();
+            if (term) {
+                document.getElementById('filterBrand').value = term;
+                loadVehicles();
+                // Scroll to results
+                document.getElementById('grid-section').scrollIntoView({ behavior: 'smooth' });
             }
-        });
+        }
     </script>
 </body>
-
 </html>
