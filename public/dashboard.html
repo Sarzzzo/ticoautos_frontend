@@ -8,103 +8,102 @@
 </head>
 <body>
 
+<div class="dashboard-bg-premium">
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="dashboard.html" class="navbar-logo">
-            <img src="../img/ImageProy.png" alt="Logo TicoAutos" class="logo-img" style="width: 38px; height: 38px; vertical-align: middle; margin-right: 8px;">
-            Tico<span>Autos</span>
-        </a>
-
-        <div class="navbar-center">
-            <span class="navbar-link active" onclick="window.location.href='dashboard.html'">Inicio</span>
-            <span class="navbar-link" id="nav-publish-link" onclick="window.location.href='publicar.html'" style="display:none;">Publicar</span>
-        </div>
-
-        <div class="navbar-right">
-            <div class="navbar-search">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                <input type="text" id="searchInput" placeholder="Buscar marca o modelo..." onkeydown="if(event.key==='Enter') searchFromNavbar()">
+    <nav class="navbar navbar-premium">
+        <div class="navbar-content">
+            <a href="dashboard.html" class="navbar-logo">
+                <img src="../img/ImageProy.png" alt="Logo TicoAutos" class="logo-img">
+                <span class="logo-text">Tico<span>Autos</span></span>
+            </a>
+            <div class="navbar-center">
+                <span class="navbar-link active" onclick="window.location.href='dashboard.html'">Inicio</span>
+                <span class="navbar-link" id="nav-publish-link" onclick="window.location.href='publicar.html'" style="display:none;">Publicar</span>
             </div>
-
-            <!-- Authenticated nav -->
-            <div id="auth-nav" style="display: none; align-items: center; gap: 16px;">
-                <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                </button>
-                <div class="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
-            </div>
-
-            <!-- Not authenticated nav -->
-            <div id="noauth-nav" style="display: none; align-items: center; gap: 12px;">
-                <button class="btn-primary" onclick="window.location.href='/'">Iniciar Sesion</button>
+            <div class="navbar-right">
+                <div class="navbar-search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="searchInput" placeholder="Buscar marca o modelo..." onkeydown="if(event.key==='Enter') searchFromNavbar()">
+                </div>
+                <div id="auth-nav" style="display: none; align-items: center; gap: 16px;">
+                    <button class="icon-btn" onclick="window.location.href='mensajes.html'" title="Mensajes">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </button>
+                    <div class="user-avatar" onclick="logout()" title="Cerrar Sesion">U</div>
+                </div>
+                <div id="noauth-nav" style="display: none; align-items: center; gap: 12px;">
+                    <button class="btn-primary" onclick="window.location.href='/'">Iniciar Sesion</button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Vehiculos en venta,<br><span class="highlight">listos para ti.</span></h1>
-        <p>Explora el catalogo automotriz mas completo. Filtra por marca, modelo, precio, Año o estado.</p>
-        <div class="hero-actions">
-            <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
+    <!-- HERO PRINCIPAL -->
+    <section class="hero hero-premium">
+        <div class="hero-content">
+            <h1 class="hero-title">Vehículos en venta,<br><span class="highlight">listos para ti.</span></h1>
+            <p class="hero-subtitle">Explora el catálogo automotriz más completo. Filtra por marca, modelo, precio, año o estado.</p>
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
+            </div>
         </div>
     </section>
 
-    <!-- FILTER BAR (all required filters from enunciado) -->
-    <div class="filter-bar">
-        <input type="text" id="filterBrand" placeholder="Marca...">
-        <input type="text" id="filterModel" placeholder="Modelo...">
-        <input type="number" id="minYear" placeholder="Año min...">
-        <input type="number" id="maxYear" placeholder="Año max...">
-        <input type="number" id="minPrice" placeholder="Precio min (₡)...">
-        <input type="number" id="maxPrice" placeholder="Precio max (₡)...">
-        <select id="statusFilter">
-            <option value="">Cualquier estado</option>
-            <option value="available">Disponible</option>
-            <option value="sold">Vendido</option>
-        </select>
-        <button class="filter-apply" onclick="loadVehicles()">Buscar</button>
+    <!-- FILTROS EN CARD GLASS -->
+    <div class="filters-wrapper-premium">
+        <div class="filter-bar filter-bar-premium">
+            <input type="text" id="filterBrand" placeholder="Marca...">
+            <input type="text" id="filterModel" placeholder="Modelo...">
+            <input type="number" id="minYear" placeholder="Año min...">
+            <input type="number" id="maxYear" placeholder="Año max...">
+            <input type="number" id="minPrice" placeholder="Precio min (₡)...">
+            <input type="number" id="maxPrice" placeholder="Precio max (₡)...">
+            <select id="statusFilter">
+                <option value="">Cualquier estado</option>
+                <option value="available">Disponible</option>
+                <option value="sold">Vendido</option>
+            </select>
+            <button class="filter-apply" onclick="loadVehicles()">Buscar</button>
+        </div>
     </div>
 
-    <!-- SECTION LABEL -->
-    <div class="section-label" id="grid-section">
+    <!-- SECCIÓN DE RESULTADOS -->
+    <div class="section-label section-label-premium" id="grid-section">
         <h2>Resultados</h2>
         <span id="resultsCount">Cargando...</span>
     </div>
 
-    <!-- GRID -->
-    <div class="vehicles-grid" id="vehiclesGrid"></div>
+    <!-- GRID DE VEHÍCULOS -->
+    <div class="vehicles-grid vehicles-grid-premium" id="vehiclesGrid"></div>
+</div>
 
-    <script src="../src/dashboard.js"></script>
-    <script>
-        function logout() {
-            localStorage.removeItem('token');
-            window.location.href = '/';
+<script src="../src/dashboard.js"></script>
+<script>
+    function logout() {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+    }
+    function searchFromNavbar() {
+        const term = document.getElementById('searchInput').value.trim();
+        if (term) {
+            document.getElementById('filterBrand').value = term;
+            loadVehicles();
+            document.getElementById('grid-section').scrollIntoView({ behavior: 'smooth' });
         }
-
-        function searchFromNavbar() {
-            const term = document.getElementById('searchInput').value.trim();
-            if (term) {
-                document.getElementById('filterBrand').value = term;
-                loadVehicles();
-                document.getElementById('grid-section').scrollIntoView({ behavior: 'smooth' });
-            }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        const authElements = document.getElementById('auth-nav');
+        const noAuthElements = document.getElementById('noauth-nav');
+        if (token) {
+            authElements.style.display = 'flex';
+            noAuthElements.style.display = 'none';
+            document.getElementById('nav-publish-link').style.display = 'inline';
+        } else {
+            authElements.style.display = 'none';
+            noAuthElements.style.display = 'flex';
         }
+    });
+</script>
 
-        // Show/hide navbar elements based on auth
-        document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            const authElements = document.getElementById('auth-nav');
-            const noAuthElements = document.getElementById('noauth-nav');
-            if (token) {
-                authElements.style.display = 'flex';
-                noAuthElements.style.display = 'none';
-                document.getElementById('nav-publish-link').style.display = 'inline';
-            } else {
-                authElements.style.display = 'none';
-                noAuthElements.style.display = 'flex';
-            }
-        });
-    </script>
 </body>
-</html>
