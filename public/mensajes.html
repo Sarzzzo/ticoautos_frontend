@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicoAutos - Mensajes</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
-
 <body>
-
     <!-- NAVBAR -->
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
         <div class="navbar-right">
             <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catalogo</button>
-            <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
         </div>
     </nav>
 
-    <div class="messages-container">
-        <div class="messages-header">
-            <h1>Mis Mensajes</h1>
-            <p>Aqui aparecen las preguntas y respuestas de tus vehiculos publicados.</p>
+    <!-- WHATSAPP-STYLE LAYOUT -->
+    <div class="chat-layout">
+
+        <!-- LEFT: Chat list -->
+        <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+                <h2>Mensajes</h2>
+            </div>
+            <div class="chat-list" id="chat-list">
+                <!-- Injected by messages.js -->
+                <div class="chat-empty" style="padding: 40px 20px;">
+                    <h3>Cargando chats...</h3>
+                </div>
+            </div>
         </div>
 
-        <div id="messages-list">
-            <!-- Injected by messages.js -->
-            <div class="empty-state">
-                <h3>Cargando mensajes...</h3>
+        <!-- RIGHT: Conversation -->
+        <div class="chat-main" id="chat-main">
+            <div class="chat-empty">
+                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted); margin-bottom: 16px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <h3>Selecciona una conversacion</h3>
+                <p>Elige un chat de la lista para ver los mensajes</p>
             </div>
         </div>
     </div>
 
     <script src="../src/messages.js"></script>
-    <script>
-        function logout() {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-        }
-    </script>
 </body>
-
 </html>

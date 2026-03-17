@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicoAutos - Portal</title>
+    <title>TicoAutos</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
-
-<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
-    <div class="auth-container">
-        <!-- LEFT: FORM -->
-        <div class="form-side">
+<body>
+    <div class="auth-page">
+        <!-- LEFT: FORM (takes half the screen) -->
+        <div class="auth-form-side">
             <div class="auth-logo">Tico<span>Autos</span></div>
 
             <div class="tabs">
@@ -55,14 +53,13 @@
             <div id="status-message" class="message"></div>
         </div>
 
-        <!-- RIGHT: BRANDING -->
-        <div class="image-side">
-            <h1 style="font-size: 38px; margin-bottom: 12px; position: relative; z-index: 1;">Encuentra o Vende</h1>
-            <p style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.7); position: relative; z-index: 1;">La plataforma automotriz mas avanzada del pais. Sin intermediarios, pura velocidad.</p>
+        <!-- RIGHT: BRANDING (gradient with blobs) -->
+        <div class="auth-brand-side">
+            <h1 style="font-size: 44px; font-weight: 900; margin-bottom: 16px; position: relative; z-index: 1;">Encuentra o<br>Vende tu Auto</h1>
+            <p style="font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.6); position: relative; z-index: 1; max-width: 400px;">La plataforma automotriz mas avanzada del pais. Sin intermediarios, pura velocidad.</p>
         </div>
     </div>
 
     <script src="../src/app.js"></script>
 </body>
-
 </html>
