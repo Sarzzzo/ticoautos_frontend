@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const year = parseInt(document.getElementById('year').value);
             const price = parseFloat(document.getElementById('price').value);
             const description = document.getElementById('description').value;
+            // El precio se maneja en colones costarricenses (CRC)
 
             const messageDiv = document.getElementById('publish-message');
             messageDiv.innerHTML = '<span style="color: var(--text-muted);">Publicando anuncio...</span>';

@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Fill vehicle info
         document.getElementById('vehicle-title').innerText = `${vehicle.brand} ${vehicle.model}`;
-        document.getElementById('vehicle-price').innerText = `$${vehicle.price.toLocaleString()}`;
+        document.getElementById('vehicle-price').innerText = `₡${vehicle.price.toLocaleString('es-CR')}`;
         document.getElementById('vehicle-year').innerText = `Año: ${vehicle.year}`;
         document.getElementById('vehicle-description').innerText = vehicle.description || 'Sin descripcion detallada.';
 
