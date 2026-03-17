@@ -10,68 +10,69 @@
 
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar">
-        <a href="dashboard.html" class="navbar-logo">TicoAutos</a>
-        <div class="navbar-actions">
+        <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
+        <div class="navbar-right">
             <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Inicio</button>
             <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
         </div>
     </nav>
 
-    <div class="dashboard-container" style="justify-content: center; padding: 40px 20px; align-items: flex-start;">
+    <div style="display: flex; justify-content: center; padding: 50px 20px;">
 
         <div class="publish-wrapper">
             <!-- Left: Form -->
             <div class="form-area">
-                <h2 style="margin-bottom: 10px; color: var(--text-main); font-size: 28px;">Vende tu Vehiculo</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">Especifica los detalles tecnicos para atraer mas compradores.</p>
+                <h2 style="margin-bottom: 10px; font-size: 28px;">Vende tu Vehiculo</h2>
+                <p style="margin-bottom: 30px;">Especifica los detalles tecnicos para atraer mas compradores.</p>
 
                 <form id="publish-form">
-                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 18px;">
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
                             <label>Marca</label>
                             <input type="text" id="brand" placeholder="Ej: Honda" required
-                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                                style="width: 100%; padding: 12px; border-radius: 8px;">
                         </div>
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
                             <label>Modelo</label>
                             <input type="text" id="model" placeholder="Ej: Civic" required
-                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                                style="width: 100%; padding: 12px; border-radius: 8px;">
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 18px;">
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
                             <label>Ano de Fabricacion</label>
                             <input type="number" id="year" placeholder="2020" min="1980" max="2026" required
-                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                                style="width: 100%; padding: 12px; border-radius: 8px;">
                         </div>
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
                             <label>Precio de Venta ($)</label>
                             <input type="number" id="price" placeholder="12500" min="1" required
-                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                                style="width: 100%; padding: 12px; border-radius: 8px;">
                         </div>
                     </div>
 
-                    <div class="input-group" style="margin-bottom: 25px;">
+                    <div class="input-group" style="margin-bottom: 22px;">
                         <label>Descripcion del Estado Mecanico e Interior</label>
                         <textarea id="description"
                             placeholder="Ej: Unico dueno, llantas nuevas, mantenimientos al dia..." rows="4"
-                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: none; font-family: inherit; box-sizing: border-box;"></textarea>
+                            style="width: 100%; padding: 12px; border-radius: 8px; resize: none; font-family: inherit; box-sizing: border-box;"></textarea>
                     </div>
 
                     <button type="submit" class="btn-primary"
-                        style="width: 100%; padding: 15px; font-size: 16px; border-radius: 8px; margin-top: 10px;">Publicar Anuncio</button>
+                        style="width: 100%; padding: 14px; font-size: 15px;">Publicar Anuncio</button>
 
-                    <div id="publish-message" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
+                    <div id="publish-message" style="margin-top: 18px; text-align: center; font-weight: 600; font-size: 14px;"></div>
                 </form>
             </div>
 
-            <!-- Right: Photo Section -->
+            <!-- Right: Photo -->
             <div class="pic-area">
                 <div class="upload-overlay">
-                    <strong>Imagen Destacada</strong>
-                    <p style="font-size: 14px; margin-top: 5px; color: #d1d5db;">El sistema asignara una imagen representativa automaticamente.</p>
+                    <strong style="font-size: 16px;">Imagen Destacada</strong>
+                    <p style="font-size: 13px; margin-top: 6px; color: rgba(255,255,255,0.6);">El sistema asignara una imagen representativa automaticamente.</p>
                 </div>
             </div>
 

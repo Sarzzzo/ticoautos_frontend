@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoAutos - Mensajes</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <a href="dashboard.html" class="navbar-logo">Tico<span>Autos</span></a>
+        <div class="navbar-right">
+            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catalogo</button>
+            <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
+        </div>
+    </nav>
+
+    <div class="messages-container">
+        <div class="messages-header">
+            <h1>Mis Mensajes</h1>
+            <p>Aqui aparecen las preguntas y respuestas de tus vehiculos publicados.</p>
+        </div>
+
+        <div id="messages-list">
+            <!-- Injected by messages.js -->
+            <div class="empty-state">
+                <h3>Cargando mensajes...</h3>
+            </div>
+        </div>
+    </div>
+
+    <script src="../src/messages.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+
+</html>
