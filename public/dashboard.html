@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicoAutos - Catálogo</title>
-    <!-- Include the global stylesheet -->
+    <title>TicoAutos - Catalogo</title>
     <link rel="stylesheet" href="./styles.css">
 </head>
 
 <body>
 
-    <!-- TOP NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <a href="#" class="navbar-logo">TicoAutos</a>
 
@@ -20,13 +19,12 @@
         </div>
 
         <div class="navbar-actions">
-            <!-- Publish button with tesla green accent -->
             <button class="btn-primary" onclick="window.location.href='publicar.html'">+ Publicar Anuncio</button>
-            <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
+            <button class="btn-secondary" onclick="logout()">Cerrar Sesion</button>
         </div>
     </nav>
 
-    <!-- MAIN BODY (Sidebar + Catalog) -->
+    <!-- MAIN BODY -->
     <div class="dashboard-container">
 
         <!-- FILTERS SIDEBAR -->
@@ -34,12 +32,12 @@
             <h2>Filtros</h2>
 
             <div class="filter-group">
-                <label>Precio Mínimo ($)</label>
+                <label>Precio Minimo ($)</label>
                 <input type="number" id="minPrice" placeholder="Ej: 5000">
             </div>
 
             <div class="filter-group">
-                <label>Precio Máximo ($)</label>
+                <label>Precio Maximo ($)</label>
                 <input type="number" id="maxPrice" placeholder="Ej: 50000">
             </div>
 
@@ -52,67 +50,25 @@
                 </select>
             </div>
 
-            <button class="btn-primary" style="width: 100%; border-radius: 10px;" onclick="loadVehicles()">Aplicar
-                Filtros</button>
+            <button class="btn-primary" style="width: 100%; border-radius: 10px;" onclick="loadVehicles()">Aplicar Filtros</button>
         </aside>
 
-        <!-- CENTRAL VEHICLES ZONE -->
+        <!-- VEHICLE LIST -->
         <main class="main-content">
             <div class="results-header">
-                <span id="resultsCount">Mostrando vehículos de ejemplo (diseño)</span>
+                <span id="resultsCount">Cargando vehiculos...</span>
             </div>
 
-            <!-- Grid cards will be injected here from dashboard.js -->
             <div class="vehicles-grid" id="vehiclesGrid">
-
-                <!-- STATIC EXAMPLE OF HOW A CARD WILL LOOK -->
-                <!-- Once we program dashboard.js, these will be generated alone connected to the Backend -->
-                <a href="#" class="vehicle-card">
-                    <div class="badge-featured">🌟 Destacado</div>
-                    <div class="vehicle-image"
-                        style="background-image: url('https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=500');">
-                        <!-- Unsplash car photo -->
-                    </div>
-
-                    <div class="vehicle-info">
-                        <div class="vehicle-price">$45,500</div>
-                        <h3 class="vehicle-title">Hyundai Staria 2025</h3>
-
-                        <!-- Fine details Encuentra24 / GTA5 style -->
-                        <div class="vehicle-specs">
-                            <span class="spec-item">📅 2025</span>
-                            <span class="spec-item">⛽ Diesel</span>
-                            <span class="spec-item">⚙️ Automática</span>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#" class="vehicle-card">
-                    <div class="vehicle-image"
-                        style="background-image: url('https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&q=80&w=500');">
-                    </div>
-                    <div class="vehicle-info">
-                        <div class="vehicle-price">$15,200</div>
-                        <h3 class="vehicle-title">Toyota Yaris Cross</h3>
-                        <div class="vehicle-specs">
-                            <span class="spec-item">📅 2022</span>
-                            <span class="spec-item">⛽ Gasolina</span>
-                            <span class="spec-item">⚙️ Manual</span>
-                        </div>
-                    </div>
-                </a>
-
+                <!-- Injected dynamically by dashboard.js -->
             </div>
         </main>
     </div>
 
-    <!-- Main script -->
-    <script src="../src/app.js"></script>
-
-    <!-- Connect the exclusive JS magic of the Dashboard -->
     <script src="../src/dashboard.js"></script>
-
-
+    <script>
+        function logout() { localStorage.removeItem('token'); window.location.href = '/'; }
+    </script>
 </body>
 
 </html>
