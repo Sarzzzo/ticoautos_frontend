@@ -1,3 +1,5 @@
+// Authentication logic (login and register)
+
 function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
@@ -12,7 +14,7 @@ function switchTab(tab) {
     }
 }
 
-// REGISTER SECURE
+// Register handler
 document.getElementById('register-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const username = document.getElementById('register-username').value;
@@ -30,25 +32,25 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
         });
         const data = await response.json();
         if (response.ok) {
-            messageDiv.innerHTML = `<span style="color: #10b981;">¡Registro exitoso! Ya puedes iniciar sesión.</span>`;
+            messageDiv.innerHTML = '<span style="color: var(--accent);">Registro exitoso! Ya puedes iniciar sesion.</span>';
             document.getElementById('register-form').reset();
             setTimeout(() => switchTab('login'), 2000);
         } else {
-            messageDiv.innerHTML = `<span style="color: red;">${data.message || 'Error'}</span>`;
+            messageDiv.innerHTML = `<span style="color: #dc2626;">${data.message || 'Error'}</span>`;
         }
     } catch (error) {
-        messageDiv.innerHTML = `<span style="color: red;">Error en el servidor.</span>`;
+        messageDiv.innerHTML = '<span style="color: #dc2626;">Error en el servidor.</span>';
     }
 });
 
-// LOGIN SECURE
+// Login handler
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const username = document.getElementById('login-username').value;
     const password = document.getElementById('login-password').value;
     const messageDiv = document.getElementById('status-message');
 
-    // Auto-login con username O email gracias al backend que hicimos
+    // Support login with email or username
     const loginData = username.includes('@') ? { email: username, password } : { username, password };
 
     messageDiv.innerHTML = '<span style="color: gray;">Verificando credenciales...</span>';
@@ -63,12 +65,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
         if (response.ok) {
             localStorage.setItem('token', data.token);
-            messageDiv.innerHTML = `<span style="color: #10b981;">¡Aprobado! Entrando...</span>`;
+            messageDiv.innerHTML = '<span style="color: var(--accent);">Sesion iniciada! Redirigiendo...</span>';
             setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
         } else {
-            messageDiv.innerHTML = `<span style="color: red;">Credenciales incorrectas.</span>`;
+            messageDiv.innerHTML = '<span style="color: #dc2626;">Credenciales incorrectas.</span>';
         }
     } catch (error) {
-        messageDiv.innerHTML = `<span style="color: red;">Error crítico de servidor.</span>`;
+        messageDiv.innerHTML = '<span style="color: #dc2626;">Error critico de servidor.</span>';
     }
 });
