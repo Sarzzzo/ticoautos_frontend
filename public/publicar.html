@@ -4,95 +4,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicoAutos - Publicar Vehículo</title>
-    <!-- Include the global stylesheet -->
+    <title>TicoAutos - Publicar</title>
     <link rel="stylesheet" href="./styles.css">
+    <style>
+        .publish-wrapper {
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .form-area {
+            width: 55%;
+            padding: 40px;
+        }
+
+        .pic-area {
+            width: 45%;
+            background: url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        /* Aesthetic overlay to fake the photo upload zone */
+        .upload-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body>
+<body style="background: var(--bg-color);">
 
-    <!-- TOP NAVBAR -->
     <nav class="navbar">
         <a href="dashboard.html" class="navbar-logo">TicoAutos</a>
-
         <div class="navbar-actions">
-            <!-- Navigate back to the dashboard -->
-            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Catálogo</button>
+            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">Volver al Inicio</button>
             <button class="btn-secondary" onclick="logout()">Cerrar Sesión</button>
         </div>
     </nav>
 
-    <!-- MAIN BODY -->
-    <div class="dashboard-container" style="justify-content: center; padding: 40px 20px;">
-        
-        <!-- CENTERED FORM CONTAINER -->
-        <main class="main-content" style="max-width: 600px; width: 100%;">
-            
-            <div style="background: white; border-radius: 15px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border-color);">
-                <h2 style="margin-bottom: 20px; color: var(--text-main);">Publicar un Nuevo Vehículo</h2>
-                <p style="color: var(--text-muted); margin-bottom: 30px;">Completa los datos de tu vehículo para que miles de compradores puedan verlo.</p>
+    <div class="dashboard-container" style="justify-content: center; padding: 40px 20px; align-items: flex-start;">
 
-                <!-- This ID matches the JavaScript event listener -->
+        <div class="publish-wrapper">
+            <!-- Left: Expanded Form -->
+            <div class="form-area">
+                <h2 style="margin-bottom: 10px; color: var(--text-main); font-size: 28px;">Vende tu Vehículo</h2>
+                <p style="color: var(--text-muted); margin-bottom: 30px;">Especifica los detalles técnicos para atraer
+                    más miradas.</p>
+
                 <form id="publish-form">
-                    
-                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
-                            <label for="brand">Marca</label>
-                            <input type="text" id="brand" placeholder="Ej: Toyota" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <label>Marca</label>
+                            <input type="text" id="brand" placeholder="Ej: Honda" required
+                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
                         </div>
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
-                            <label for="model">Modelo</label>
-                            <input type="text" id="model" placeholder="Ej: Yaris" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <label>Modelo</label>
+                            <input type="text" id="model" placeholder="Ej: Civic" required
+                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+                    <div style="display: flex; gap: 15px; margin-bottom: 20px;">
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
-                            <label for="year">Año</label>
-                            <!-- Valid range to prevent bad data in Database -->
-                            <input type="number" id="year" placeholder="Ej: 2022" min="1950" max="2026" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <label>Año de Fabricación</label>
+                            <input type="number" id="year" placeholder="2020" min="1980" max="2026" required
+                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
                         </div>
                         <div class="input-group" style="flex: 1; margin-bottom: 0;">
-                            <label for="price">Precio ($)</label>
-                            <!-- Positive numbers only -->
-                            <input type="number" id="price" placeholder="Ej: 15000" min="1" required style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+                            <label>Precio de Venta ($)</label>
+                            <input type="number" id="price" placeholder="12500" min="1" required
+                                style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
                         </div>
                     </div>
 
                     <div class="input-group" style="margin-bottom: 25px;">
-                        <label for="description">Descripción (Opcional)</label>
-                        <textarea id="description" placeholder="Cuenta más detalles sobre el estado del vehículo..." rows="4" style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: none; font-family: inherit; box-sizing: border-box;"></textarea>
+                        <label>Descripción del Estado Mecánico e Interior</label>
+                        <textarea id="description"
+                            placeholder="Ej: Único dueño, llantas nuevas, mantenimientos al día..." rows="4"
+                            style="width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; resize: none; font-family: inherit; box-sizing: border-box;"></textarea>
                     </div>
 
-                    <button type="submit" class="btn-primary" style="width: 100%; padding: 15px; font-size: 16px; border-radius: 8px;">Publicar Anuncio</button>
-                    
-                    <!-- Space dedicated to success or error messages from Node.js -->
-                    <div id="publish-message" style="margin-top: 20px; text-align: center; font-weight: 500;"></div>
+                    <button type="submit" class="btn-primary"
+                        style="width: 100%; padding: 15px; font-size: 16px; border-radius: 8px; margin-top: 10px;">🚀
+                        Publicar de Inmediato</button>
+
+                    <div id="publish-message" style="margin-top: 20px; text-align: center; font-weight: bold;"></div>
                 </form>
             </div>
 
-        </main>
+            <!-- Right: Photo Section -->
+            <div class="pic-area">
+                <div class="upload-overlay">
+                    <span style="font-size: 30px; display: block; margin-bottom: 10px;">📸</span>
+                    <strong>Imagen Destacada</strong>
+                    <p style="font-size: 14px; margin-top: 5px; color: #d1d5db;">(Por ahora, el sistema asignará una
+                        galería 4K automáticamente para el diseño premium. El motor fotográfico lo procesará).</p>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <!-- MAIN SCRIPT -->
     <script src="../src/publish.js"></script>
     <script>
-        // Check authentication immediately (Runs instantly)
         document.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('No tienes permiso para acceder a esta página. Debes iniciar sesión.');
-                // Redirects if trying to bypass login
-                window.location.href = '/';
+            if (!localStorage.getItem('token')) {
+                alert('Sesión expirada. Regresa al Login.'); window.location.href = '/';
             }
         });
-
-        // Logout function explicitly defined for the button
-        function logout() {
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            window.location.href = '/'; 
-        }
+        function logout() { localStorage.removeItem('token'); window.location.href = '/'; }
     </script>
 </body>
 
